@@ -9,10 +9,7 @@ const mongoURL = process.env.DB_URL;
 /* useNewUrlParser: true: This option tells Mongoose to use the new URL parser instead of the deprecated one. It's necessary to use this option when connecting to a MongoDB database using a newer connection string.
 
 useUnifiedTopology: true: This option tells Mongoose to use the new Server Discovery and Monitoring engine instead of the deprecated one. It's necessary to use this option when connecting to a MongoDB database using a newer connection string. */
-mongoose.connect(mongoURL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoURL);
 
 //Mongose maintains a default connection object representing the MongoDB connection
 const db = mongoose.connection;
