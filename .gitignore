@@ -1,2 +1,6 @@
 # Ignore node modules folder
 node_modules/
+.env
+
+#Other Folders
+Pass Mongo: 71xLeDovLaqXqoMX

@@ -2,7 +2,9 @@
 const db = require("./db.js");
 const express = require("express");
 const app = express();
-PORT = 4000;
+require("dotenv").config();
+// ensures that the online hosted server machine uses its port 
+PORT = process.env.PORT || 4000;
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json()); //getting data in req.body
@@ -20,5 +22,5 @@ app.use("/menu", menuRoutes);
 
 //Listener
 app.listen(PORT, () => {
-  console.log(`Server running...${PORT}`);
+  console.log(`Server running on port: ${PORT}`);
 });
