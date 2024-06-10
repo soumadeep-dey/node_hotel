@@ -61,6 +61,12 @@ router.put("/:id", async (req, res) => {
     const personId = req.params.id;
     const updatedPersonData = req.body;
 
+    // Check if the provided ID is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(studentId)) {
+      console.log("Invalid student ID:", studentId);
+      return res.status(400).send({ error: "Invalid student ID" });
+    }
+
     const response = await Person.findByIdAndUpdate(
       personId,
       updatedPersonData
@@ -83,6 +89,12 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const personId = req.params.id;
+
+    // Check if the provided ID is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(studentId)) {
+      console.log("Invalid student ID:", studentId);
+      return res.status(400).send({ error: "Invalid student ID" });
+    }
 
     const deletedPerson = await Person.findByIdAndDelete(personId);
 

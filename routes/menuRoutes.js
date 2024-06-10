@@ -61,7 +61,7 @@ router.put("/:id", async (req, res) => {
     );
 
     if (!response) {
-      res.status(404).json({ error: "Item not found" });
+      return res.status(404).json({ error: "Item not found" });
     }
 
     console.log("Menu Item updated");
@@ -79,7 +79,7 @@ router.delete("/:id", async (req, res) => {
     const response = await MenuItem.findByIdAndDelete(menuItemId);
 
     if (!response) {
-      res.status(404).json({ error: "Item not found" });
+      return res.status(404).json({ error: "Item not found" });
     }
 
     console.log("Menu Item Deleted");
