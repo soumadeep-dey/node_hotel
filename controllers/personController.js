@@ -1,8 +1,9 @@
 //Import DB model
 const Person = require("../models/Person");
+const generateToken = require("../middleware/jwt");
 
 const personController = {
-  postNewPerson: async (req, res) => {
+  signup: async (req, res) => {
     try {
       const data = req.body; //from bodyParser
 
@@ -12,7 +13,51 @@ const personController = {
       //Save the new Person to the database
       const response = await newPerson.save();
       console.log("data saved");
-      res.status(200).json(response);
+
+      // Generate JWT token
+      const payload = {
+        id: response.id,
+        username: response.username,
+      };
+      const token = generateToken(payload);
+      console.log("Token is:", token);
+
+      res.status(200).json({ response, token });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
+  login: async (req, res) => {
+    try {
+      // extract username, password from req.body
+      const { username, password } = req.body;
+      const user = await Person.findOne({ username: username });
+
+      if (!user || !(await user.comparePassword(password))) {
+        return res.status(401).json({ error: "Invalid username or password" });
+      }
+      //  generate token
+      const payload = {
+        id: user.id,
+        username: user.username,
+      };
+      const token = generateToken(payload);
+
+      res.status(200).json({ token });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
+  profile: async (req, res) => {
+    try {
+      const userPayload = req.userPayload;
+      // console.log("User Payload:", userPayload);
+      const userId = userPayload.id;
+      const user = await Person.findById(userId);
+
+      res.status(200).json({ user });
     } catch (err) {
       console.log(err);
       res.status(500).json({ error: "Internal Server Error" });
