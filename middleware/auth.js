@@ -14,7 +14,7 @@ passport.use(
       const isPwdMatch = await user.comparePassword(pwd);
 
       if (!isPwdMatch) {
-        return done(null, false, { message: "Incoorect password" });
+        return done(null, false, { message: "Incorrect password" });
       }
 
       return done(null, user);

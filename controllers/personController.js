@@ -1,6 +1,6 @@
 //Import DB model
 const Person = require("../models/Person");
-const generateToken = require("../middleware/jwt");
+const { generateToken } = require("../middleware/jwt");
 
 const personController = {
   signup: async (req, res) => {
@@ -52,9 +52,9 @@ const personController = {
   },
   profile: async (req, res) => {
     try {
-      const userPayload = req.userPayload;
-      // console.log("User Payload:", userPayload);
-      const userId = userPayload.id;
+      const userId = req.userPayload.id;
+      console.log("User Payload:", userPayload);
+      // const userId = userPayload.id;
       const user = await Person.findById(userId);
 
       res.status(200).json({ user });
@@ -99,8 +99,8 @@ const personController = {
       const updatedPersonData = req.body;
 
       // Check if the provided ID is a valid ObjectId
-      if (!mongoose.Types.ObjectId.isValid(studentId)) {
-        console.log("Invalid student ID:", studentId);
+      if (!mongoose.Types.ObjectId.isValid(personId)) {
+        console.log("Invalid student ID:", personId);
         return res.status(400).send({ error: "Invalid student ID" });
       }
 
@@ -126,8 +126,8 @@ const personController = {
       const personId = req.params.id;
 
       // Check if the provided ID is a valid ObjectId
-      if (!mongoose.Types.ObjectId.isValid(studentId)) {
-        console.log("Invalid student ID:", studentId);
+      if (!mongoose.Types.ObjectId.isValid(personId)) {
+        console.log("Invalid student ID:", personId);
         return res.status(400).send({ error: "Invalid student ID" });
       }
 

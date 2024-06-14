@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const personController = require("../controllers/personController");
-const jwtAuthMiddleware = require("../middleware/jwt");
+const { jwtAuthMiddleware } = require("../middleware/jwt");
 
 //POST route to add person
 router.post("/signup", personController.signup);
